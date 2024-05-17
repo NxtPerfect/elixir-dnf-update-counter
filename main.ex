@@ -4,11 +4,13 @@ defmodule Main do
     [ _, _, version, _ ] = String.split(version, " ") 
     IO.puts version
     { output, _exit_code } = System.cmd("dnf", ["check-update"])
-    [_, packages ] = String.split(output, ~r/Last metadata expiration check:.+\\n/)
+    [ _, packages ] = String.split(output, ~r/Last metadata expiration check:.+\n/)
     if String.contains?(output, "RPM Fusion for Fedora #{version} - Nonfree - Updates\n") do
       [ _, packages ] = String.split(output, "RPM Fusion for Fedora #{version} - Nonfree - Updates\n")
     end
+    package_count = Integer.floor_div(String.split(packages, ~r/\s+/) |> length(), 3)
     IO.puts packages
+    IO.puts package_count
     # IO.puts "Number of packages is #{packages}"
     # After RPM Fusion for Fedora (number) - Nonfree - Updates
     # new empty line
