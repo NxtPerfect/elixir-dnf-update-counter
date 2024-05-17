@@ -1,0 +1,1 @@
+- [ ] Issue trying to split output of dnf check-update
